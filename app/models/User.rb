@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   belongs_to :usersite
   has_many :sites, through: :usersite
   def get_city_and_type_name
-    save_array = []
+    new_array = []
     city_input = gets.chomp
     coordinate_finder(city_input)
     latitude = coordinate_finder(city_input)[0]
@@ -15,9 +15,11 @@ class User < ActiveRecord::Base
      y = site_finder(type_input, latitude, longitude).each do |non_hash|
        non_hash[:results].select do |result|
          result[:name]
-       end
-     end
-     save_array << y
+         new_array << y
+         # Site.new(NAME = y[0..-1], type_input)
+        end
+      end
+      new_array
     end
   end
 end
