@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :cities, through: :usercity
   belongs_to :usersite
   has_many :sites, through: :usersite
+
   def get_city_and_type_name
     new_array = []
     city_input = gets.chomp
@@ -12,14 +13,14 @@ class User < ActiveRecord::Base
     type_input = gets.chomp
     while type_input != "No"
       puts "Do you want to add more sites?"
-     y = site_finder(type_input, latitude, longitude).each do |non_hash|
+      site_finder(type_input, latitude, longitude).each do |non_hash|
        non_hash[:results].select do |result|
-         result[:name]
-         new_array << y
-         # Site.new(NAME = y[0..-1], type_input)
+         new_array << result[:name]
+         Site.new(NAME = result[:name], type_input)
         end
       end
       new_array
     end
   end
+
 end
