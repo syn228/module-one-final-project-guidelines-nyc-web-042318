@@ -16,11 +16,6 @@ ActiveRecord::Schema.define(version: 20180507185429) do
     t.string "name"
   end
 
-  create_table "citysite", force: :cascade do |t|
-    t.integer "city_id"
-    t.integer "site_id"
-  end
-
   create_table "sites", force: :cascade do |t|
     t.string "name"
     t.string "type"
@@ -33,6 +28,11 @@ ActiveRecord::Schema.define(version: 20180507185429) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
+  end
+
+  create_table "usersite", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "site_id"
   end
 
 end
