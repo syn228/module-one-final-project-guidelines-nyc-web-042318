@@ -9,14 +9,17 @@ require_relative '../config/environment'
     input = STDIN.gets.chomp.to_i
   end
   if input == 1
-    puts "Please enter your username"
-    username = STDIN.gets.chomp
-    until User.find_by username: username != nil
-      puts "Cannot find user, please try again or create account.
-      1. Create Account"
-      username = STDIN.gets.chomp
-      User.find_by username: username
-    end
-  end
+    find_by_username
+    # if un.find_by_username == nil
 
-  user.get_city_and_type_name
+    #   puts "Cannot find user, please try again or create account.
+    #   1. Create Account"
+    #   un = STDIN.gets.chomp
+    #   un.find_by_username
+    #     if User.find_by username: un != nil
+    #     x = User.find_by username: un
+    #   end
+    # end
+    # puts "Welcome #{un}!"
+    # x.get_city_and_type_name
+  end
