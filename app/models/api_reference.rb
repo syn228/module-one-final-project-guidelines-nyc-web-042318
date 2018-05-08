@@ -12,9 +12,9 @@ def coordinate_finder(city_input)
 end
 
 
-def site_finder(type_input, latitude, longitude, radius)
+def site_finder(type_input, latitude, longitude, radius_input)
   arr = []
-  cf = RestClient.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=#{radius}&type=#{type_input}&key=AIzaSyDXstCAzJeedSOFzmbSigCLDWiEbxnj_CI")
+  cf = RestClient.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=#{radius_input}&type=#{type_input}&key=AIzaSyDXstCAzJeedSOFzmbSigCLDWiEbxnj_CI")
   pcf = JSON.parse(cf)
     pcf["results"].select do |array|
         arr << array["name"]
