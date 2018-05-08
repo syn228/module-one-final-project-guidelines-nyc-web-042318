@@ -6,19 +6,18 @@ class User < ActiveRecord::Base
 
   def get_city_and_type_name
     new_array = []
-    city_input = gets.chomp
-    coordinate_finder(city_input)
-    latitude = coordinate_finder(city_input)[0]
-    longitude = coordinate_finder(city_input)[1]
-    type_input = gets.chomp
+    puts "Put a city name here:"
+    city_input = STDIN.gets.chomp
+    latlng = coordinate_finder(city_input)
+    latitude = latlng[0]
+    longitude = latlng[1]
+    type_input = STDIN.gets.chomp
     while type_input != "No"
       puts "Do you want to add more sites?"
-      site_finder(type_input, latitude, longitude).each do |non_hash|
-       non_hash[:results].select do |result|
-         new_array << result[:name]
-         Site.create(name: result[:name], type: type_input)
-        end
-      end
+      site_finder(type_input, latitude, longitude)
+      #   non_hash["results"].select do |result|
+      #     new_array << result[:name]
+          Site.create(name: result[:name], type: type_input)
       new_array
     end
   end

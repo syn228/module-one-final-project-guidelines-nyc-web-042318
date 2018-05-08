@@ -1,6 +1,6 @@
-class CreateUsersiteTable < ActiveRecord::Migration[5.0]
+class CreateUsersiteTable < ActiveRecord::Migration[5.2]
   def change
-    create_table :usersite do |t|
+    create_table :usersites do |t|
       t.integer :user_id
       t.integer :site_id
     end

@@ -1,4 +1,4 @@
-class CreateSitesTable < ActiveRecord::Migration[5.0]
+class CreateSitesTable < ActiveRecord::Migration[5.2]
   def change
     create_table :sites do |t|
       t.string :name

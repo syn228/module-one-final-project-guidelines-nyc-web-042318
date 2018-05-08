@@ -2,9 +2,11 @@
 
 
 def coordinate_finder(city_input)
-  RestClient.get("https://maps.googleapis.com/maps/api/geocode/json?address=#{city_input}&key=AIzaSyAfv9BopUtEDnzyZGBGFTf0xHX5Kz-f2mU")
-  latitude = coordinate_finder[:results][:geometry][:location][:latitude]
-  longitude = coordinate_finder[:results][:geometry][:location][:longitude]
+  cf = RestClient.get("https://maps.googleapis.com/maps/api/geocode/json?address=#{city_input}&key=AIzaSyAfv9BopUtEDnzyZGBGFTf0xHX5Kz-f2mU")
+  pcf = JSON.parse(cf)
+  # binding.pry
+  latitude = pcf["results"][0]["geometry"]["location"]["lat"]
+  longitude = pcf["results"][0]["geometry"]["location"]["lng"]
   City.create(name: city_input)
   puts "Where are you going?"
   [latitude, longitude]
@@ -12,6 +14,12 @@ end
 
 
 def site_finder(type_input, latitude, longitude)
-  RestClient.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=50000&type=#{type_input}&key=AIzaSyDXstCAzJeedSOFzmbSigCLDWiEbxnj_CI")
+  arr = []
+  cf = RestClient.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=50000&type=#{type_input}&key=AIzaSyDXstCAzJeedSOFzmbSigCLDWiEbxnj_CI")
+  pcf = JSON.parse(cf)
+    pcf["results"].select do |array|
+        arr << array["name"]
+  end
+  binding.pry
   #associate sites with city
 end
