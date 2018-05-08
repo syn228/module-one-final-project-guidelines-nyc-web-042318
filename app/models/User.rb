@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
       site_finder(type_input, latitude, longitude).each do |non_hash|
        non_hash[:results].select do |result|
          new_array << result[:name]
-         Site.new(NAME = result[:name], type_input)
+         Site.create(name: result[:name], type: type_input)
         end
       end
       new_array
