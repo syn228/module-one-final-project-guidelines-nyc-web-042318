@@ -4,7 +4,6 @@
 def coordinate_finder(city_input)
   cf = RestClient.get("https://maps.googleapis.com/maps/api/geocode/json?address=#{city_input}&key=AIzaSyAfv9BopUtEDnzyZGBGFTf0xHX5Kz-f2mU")
   pcf = JSON.parse(cf)
-  # binding.pry
   latitude = pcf["results"][0]["geometry"]["location"]["lat"]
   longitude = pcf["results"][0]["geometry"]["location"]["lng"]
   City.create(name: city_input)
@@ -15,11 +14,17 @@ end
 
 def site_finder(type_input, latitude, longitude)
   arr = []
-  cf = RestClient.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=50000&type=#{type_input}&key=AIzaSyDXstCAzJeedSOFzmbSigCLDWiEbxnj_CI")
+  cf = RestClient.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{latitude},#{longitude}&radius=500&type=#{type_input}&key=AIzaSyDXstCAzJeedSOFzmbSigCLDWiEbxnj_CI")
   pcf = JSON.parse(cf)
     pcf["results"].select do |array|
         arr << array["name"]
   end
-  binding.pry
+=begin
+  Site.all.map do |site|
+    site[:name]
+  end
+=end
+  arr.uniq.each {|sites| Site.create(name: sites, place_type: type_input)}
+  arr.uniq.sort
   #associate sites with city
 end

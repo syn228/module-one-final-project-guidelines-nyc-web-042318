@@ -5,21 +5,21 @@ class User < ActiveRecord::Base
   has_many :sites, through: :usersite
 
   def get_city_and_type_name
-    new_array = []
     puts "Put a city name here:"
     city_input = STDIN.gets.chomp
     latlng = coordinate_finder(city_input)
     latitude = latlng[0]
     longitude = latlng[1]
     type_input = STDIN.gets.chomp
-    while type_input != "No"
+    while true
       puts "Do you want to add more sites?"
-      site_finder(type_input, latitude, longitude)
-      #   non_hash["results"].select do |result|
-      #     new_array << result[:name]
-          Site.create(name: result[:name], type: type_input)
-      new_array
+      arr = site_finder(type_input, latitude, longitude)
+      site_outputs = arr[0..-1]
+      type_input = STDIN.gets.chomp
+      if type_input == "No".downcase
+        puts "Thank you."
+        return site_outputs
+      end
     end
   end
-
 end
