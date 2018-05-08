@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   belongs_to :usersite
   has_many :sites, through: :usersite
 
+
   def get_city_and_type_name
     puts "Put a city name here:"
     city_input = STDIN.gets.chomp
@@ -16,9 +17,10 @@ class User < ActiveRecord::Base
       arr = site_finder(type_input, latitude, longitude)
       site_outputs = arr[0..-1]
       type_input = STDIN.gets.chomp
-      if type_input == "No".downcase
+    if type_input == "No".downcase
         puts "Thank you."
-        return site_outputs
+        puts site_outputs
+        break
       end
     end
   end
