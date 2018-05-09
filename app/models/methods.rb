@@ -1,4 +1,4 @@
-def sign_in
+def sign_in_username
   puts "Please enter your username:
   1. Create Account"
   un = STDIN.gets.chomp
@@ -7,11 +7,23 @@ def sign_in
   else user = User.find_by username: un
   if user == nil
     puts "No username found"
-    sign_in
+    sign_in_username
   else
-    puts "Welcome #{user.name}!"
-    user.get_city_and_type_name
+    sign_in_password
     end
+  end
+end
+
+def sign_in_password
+  puts "Please enter your password:"
+  pw = STDIN.gets.chomp
+  password = User.find_by password: pw
+  if password == nil
+    puts "Wrong password. Please try again."
+    sign_in_password
+  else
+    puts "Welcome #{password.name}!"
+    password.get_city_and_type_name
   end
 end
 
@@ -19,6 +31,7 @@ def create_account
 
   puts "Please enter your name:"
   a_name = STDIN.gets.chomp
+  #need to prevent symbol usage!
 
   puts "Please create your user name:"
   un = STDIN.gets.chomp
@@ -28,6 +41,9 @@ def create_account
     un = STDIN.gets.chomp
   elsif un.length > 15
     puts "Your user name cannot exceed 15 characters"
+    un = STDIN.gets.chomp
+  elsif User.find_by(username: un) != nil
+    puts "This user name already exists, please choose another user name."
     un = STDIN.gets.chomp
   else break
     end
@@ -45,10 +61,74 @@ def create_account
   else break
     end
   end
-  User.create(name: a_name, username: un, password: pw)
+  user = User.create(name: a_name, username: un, password: pw)
   puts "Thank you for creating your account!"
   user.get_city_and_type_name
 end
+
+
+
+def site_selector(arr, type_input, new_city)
+  puts "Which site would you like to visit?"
+  site_selection = STDIN.gets.chomp.to_i
+  until site_selection.class == Fixnum && site_selection != 0 && site_selection <= 20
+    puts "Please enter a valid number:"
+  site_selection = STDIN.gets.chomp.to_i
+  end
+  #remove duplicate of sites
+  site = Site.find_or_create_by(name:arr[(site_selection - 1)], place_type: type_input, city_id: new_city.id)
+  Usersite.create(user_id: self.id, site_id: site.id)
+  user_finder = Usersite.where(site_id: site.id).map {|usersite| usersite.user_id}
+  puts "Other users going to this area:
+  #{user_finder.map {|usi| User.where(id: usi)}.map {|user| user}.flatten.map {|user| user.name}.flatten.uniq}"
+end
+
+def site_helper_method(type_input, latitude, longitude, radius_input, new_city, additional_input="Yes".downcase)
+  arr = site_finder(type_input, latitude, longitude, radius_input)
+
+
+  site_outputs = arr.each_with_index{|list, i| puts "#{i + 1}. #{list}"}
+  if additional_input == "Yes".downcase
+    site_selector(arr, type_input, new_city)
+    more_of_the_same_site(type_input, latitude, longitude, radius_input, new_city)
+  else add_more_sites(type_input, latitude, longitude, radius_input, new_city)
+  end
+end
+
+  def more_of_the_same_site(type_input, latitude, longitude, radius_input, new_city)
+    puts "Are you interested in any other #{type_input}? (Yes/No)"
+    additional_input = STDIN.gets.chomp
+      if additional_input == "Yes".downcase
+        site_helper_method(type_input, latitude, longitude, radius_input, new_city, additional_input)
+        # more_of_the_same_site(type_input, latitude, longitude, radius_input, new_city)
+      elsif additional_input == "No".downcase
+        add_more_sites(type_input, latitude, longitude, radius_input, new_city)
+      else puts "Please select yes or no."
+        more_of_the_same_site(type_input, latitude, longitude, radius_input, new_city)
+    end
+  end
+
+
+def add_more_sites(type_input, latitude, longitude, radius_input, new_city)
+  puts "Do you want to add more sites? Yes/No"
+  response = STDIN.gets.chomp
+
+  # until type_input == "No".downcase
+  #   site_helper_method(type_input, latitude, longitude, radius_input)
+  #   puts "Do you want to add more sites?"
+  #   type_input = STDIN.gets.chomp
+  # end
+  if response == "Yes".downcase
+    puts "Please pick another site you would like to visit:"
+    additional_type = STDIN.gets.chomp
+    site_helper_method(additional_type, latitude, longitude, radius_input, new_city, additional_input="Yes".downcase)
+  elsif response == "No".downcase
+    puts "Thank you."
+  else puts "Please enter yes or no"
+    add_more_sites(type_input, latitude, longitude, radius_input, new_city)
+  end
+end
+
 
 
 

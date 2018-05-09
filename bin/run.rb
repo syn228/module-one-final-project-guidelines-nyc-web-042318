@@ -9,7 +9,7 @@ require_relative '../config/environment'
     input = STDIN.gets.chomp.to_i
   end
   if input == 1
-    sign_in
+    sign_in_username
   elsif input == 2
     create_account
     # if un.find_by_username == nil

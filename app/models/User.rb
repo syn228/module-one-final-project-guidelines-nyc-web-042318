@@ -8,28 +8,22 @@ class User < ActiveRecord::Base
   def get_city_and_type_name
     puts "Please enter a city name:"
     city_input = STDIN.gets.chomp
+      new_city = City.find_or_create_by(name:"#{city_input}")
+      Usercity.create(city_id: new_city.id, user_id: self.id)
+
+      puts "Please enter mile radius:"
+      radius_input = STDIN.gets.chomp.to_i * 1609.34
+      until radius_input.class == Float && radius_input != 0
+        puts "Please enter the actual number:"
+        radius_input = STDIN.gets.chomp.to_i * 1609.34
+      end
     latlng = coordinate_finder(city_input)
     latitude = latlng[0]
     longitude = latlng[1]
+    puts "Where kind of place are you interested in visiting?"
     type_input = STDIN.gets.chomp
+    site_helper_method(type_input, latitude, longitude, radius_input, new_city)
 
-    puts "Please enter mile radius:"
-    radius_input = STDIN.gets.chomp.to_i * 1609.34
-    until radius_input.class == Float && radius_input != 0
-      puts "Please enter the actual number:"
-      radius_input = STDIN.gets.chomp.to_i * 1609.34
-    end
 
-    while true
-      puts "Do you want to add more sites?"
-      arr = site_finder(type_input, latitude, longitude, radius_input)
-      site_outputs = arr[0..-1]
-      type_input = STDIN.gets.chomp
-    if type_input == "No".downcase
-        puts "Thank you."
-        puts site_outputs
-        break
-      end
-    end
   end
 end

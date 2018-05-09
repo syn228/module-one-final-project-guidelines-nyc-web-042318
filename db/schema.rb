@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2018_05_07_185429) do
   create_table "sites", force: :cascade do |t|
     t.string "name"
     t.string "place_type"
+    t.integer "city_id"
   end
 
   create_table "usercities", force: :cascade do |t|
