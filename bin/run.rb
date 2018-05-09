@@ -9,7 +9,9 @@ require_relative '../config/environment'
     input = STDIN.gets.chomp.to_i
   end
   if input == 1
-    find_by_username
+    sign_in
+  elsif input == 2
+    create_account
     # if un.find_by_username == nil
 
     #   puts "Cannot find user, please try again or create account.

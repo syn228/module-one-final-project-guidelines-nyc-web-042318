@@ -4,14 +4,9 @@ class User < ActiveRecord::Base
   belongs_to :usersite
   has_many :sites, through: :usersite
 
-  def get_username
-  puts "Hello, please input your username:"
-  username = STDIN.gets.chomp
-  user = User.create(name: username)
-  end
 
   def get_city_and_type_name
-    puts "Put a city name here:"
+    puts "Please enter a city name:"
     city_input = STDIN.gets.chomp
     latlng = coordinate_finder(city_input)
     latitude = latlng[0]
