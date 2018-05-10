@@ -1,20 +1,20 @@
 require_relative '../config/environment'
 
-  rainbow = ["#622e90", "#2d3091", "#00aaea", "#02a552", "#fdea22", "#eb443b", "#f37f5a"]
-  10.times do
-    rainbow.each { |colour| print "    ".bg colour }
-    puts
-  end
+  # rainbow = ["#622e90", "#2d3091", "#00aaea", "#02a552", "#fdea22", "#eb443b", "#f37f5a"]
+  # 10.times do
+  #   rainbow.each { |colour| print "    ".bg colour }
+  #   puts
+  # end
 
 
-  Catpix::print_image(~/Pictures/airplane.jpeg, options ={
-  :limit_x => 1.0,
-  :limit_y => 0,
+  Catpix::print_image "airplane3.png",
+  :limit_x => 1.5,
+  :limit_y => 1.5,
   :center_x => true,
   :center_y => true,
   :bg => "white",
-  :bg_fill => true,
-  :resolution => "low"})
+  :bg_fill => false,
+  :resolution => "high"
 
   puts Rainbow("Hello, please sign in or create account to begin:
   1. Sign in
