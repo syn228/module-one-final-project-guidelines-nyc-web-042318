@@ -10,7 +10,7 @@ require_relative '../config/environment'
     input = STDIN.gets.chomp.to_i
   end
   if input == 1
-    sign_in_username
+    Method.sign_in_username
   elsif input == 2
-    create_account
+    Method.create_account
   end
