@@ -1,8 +1,9 @@
 require_relative '../config/environment'
 
-  puts "Hello, please sign in or create account to begin:
+  puts Rainbow("Hello, please sign in or create account to begin:
   1. Sign in
-  2. Create Account"
+  2. Create Account").blue
+
   input = STDIN.gets.chomp.to_i
   until input.class == Fixnum && (input == 1 || input == 2)
     puts "Please enter 1 or 2"
@@ -12,16 +13,4 @@ require_relative '../config/environment'
     sign_in_username
   elsif input == 2
     create_account
-    # if un.find_by_username == nil
-
-    #   puts "Cannot find user, please try again or create account.
-    #   1. Create Account"
-    #   un = STDIN.gets.chomp
-    #   un.find_by_username
-    #     if User.find_by username: un != nil
-    #     x = User.find_by username: un
-    #   end
-    # end
-    # puts "Welcome #{un}!"
-    # x.get_city_and_type_name
   end

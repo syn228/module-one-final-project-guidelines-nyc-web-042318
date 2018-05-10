@@ -75,17 +75,29 @@ def site_selector(arr, type_input, new_city)
     puts "Please enter a valid number:"
   site_selection = STDIN.gets.chomp.to_i
   end
-  #remove duplicate of sites
   site = Site.find_or_create_by(name:arr[(site_selection - 1)], place_type: type_input, city_id: new_city.id)
   Usersite.create(user_id: self.id, site_id: site.id)
   user_finder = Usersite.where(site_id: site.id).map {|usersite| usersite.user_id}
-  puts "Other users going to this area:
+
   #{user_finder.map {|usi| User.where(id: usi)}.map {|user| user}.flatten.map {|user| user.name}.flatten.uniq}"
+  user_list = user_finder.map {|usi| User.where(id: usi)}.map {|user| user}.flatten.map {|user| user.name}.flatten.uniq
+  username_display = user_finder.map {|usi| User.where(id: usi)}.map {|user| user}.flatten.map {|user| user.username}.flatten.uniq
+  # binding.pry
+  puts "All users going to this area:"
+  user_display = user_list.each_with_index{|list, i| puts "#{i + 1}. #{list}: #{username_display[i]}"}
+
+  puts "Which user do you want to go with?"
+  user_selection = STDIN.gets.chomp.to_i
+  until user_selection.class == Fixnum && user_selection != 0 && user_selection < user_list.length && self.name != user_list[user_selection - 1]
+    puts "Please enter a valid number:"
+  user_selection = STDIN.gets.chomp.to_i
+  end
+  puts "Thank you! We have sent a request to that user!"
+
 end
 
 def site_helper_method(type_input, latitude, longitude, radius_input, new_city, additional_input="Yes".downcase)
   arr = site_finder(type_input, latitude, longitude, radius_input)
-
 
   site_outputs = arr.each_with_index{|list, i| puts "#{i + 1}. #{list}"}
   if additional_input == "Yes".downcase
@@ -100,7 +112,6 @@ end
     additional_input = STDIN.gets.chomp
       if additional_input == "Yes".downcase
         site_helper_method(type_input, latitude, longitude, radius_input, new_city, additional_input)
-        # more_of_the_same_site(type_input, latitude, longitude, radius_input, new_city)
       elsif additional_input == "No".downcase
         add_more_sites(type_input, latitude, longitude, radius_input, new_city)
       else puts "Please select yes or no."
