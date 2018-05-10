@@ -22,7 +22,6 @@ GEM
       domain_name (~> 0.5)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
-    io-console (0.4.6)
     json (2.1.0)
     method_source (0.9.0)
     mime-types (3.1)
@@ -65,7 +64,6 @@ PLATFORMS
 
 DEPENDENCIES
   highline
-  io-console
   json
   pry
   rainbow
