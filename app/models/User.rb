@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   def get_city_and_type_name
     puts "Please enter a city name:"
-    city_input = STDIN.gets.chomp
+    city_input = STDIN.gets.chomp.downcase
       new_city = City.find_or_create_by(name:"#{city_input}")
       Usercity.create(city_id: new_city.id, user_id: self.id)
 
@@ -21,8 +21,8 @@ class User < ActiveRecord::Base
     latitude = latlng[0]
     longitude = latlng[1]
     puts "Where kind of place are you interested in visiting?"
-    type_input = STDIN.gets.chomp
-    site_helper_method(type_input, latitude, longitude, radius_input, new_city)
+    type_input = STDIN.gets.chomp.downcase
+    Method.site_helper_method(type_input, latitude, longitude, radius_input, new_city)
 
 
   end
