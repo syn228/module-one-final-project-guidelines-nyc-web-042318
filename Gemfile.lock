@@ -17,10 +17,12 @@ GEM
     concurrent-ruby (1.0.5)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
+    highline (1.7.10)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
+    io-console (0.4.6)
     json (2.1.0)
     method_source (0.9.0)
     mime-types (3.1)
@@ -62,6 +64,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  highline
+  io-console
   json
   pry
   rainbow
