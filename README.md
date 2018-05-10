@@ -16,6 +16,9 @@ This application is recommended for those who wish to find companions going to a
   *  'rest-client'
   *  "rainbow"
   *  'highline'
+  *  'rmagick'
+  *  'catpix'
+  *  'tco'
 * API
   * Google Place_Search API
   * Google Geocode API
