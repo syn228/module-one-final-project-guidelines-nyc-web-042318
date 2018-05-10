@@ -8,5 +8,4 @@ gem "require_all"
 gem 'json'
 gem 'rest-client'
 gem "rainbow"
-gem 'io-console'
 gem 'highline'

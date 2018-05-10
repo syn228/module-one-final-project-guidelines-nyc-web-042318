@@ -3,7 +3,6 @@ require 'rest-client'
 require 'json'
 require 'pry'
 require 'rainbow'
-require 'io/console'
 require 'highline/import'
 
 Bundler.require
