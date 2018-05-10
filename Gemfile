@@ -9,3 +9,6 @@ gem 'json'
 gem 'rest-client'
 gem "rainbow"
 gem 'highline'
+gem 'tco'
+gem 'rmagick'
+gem 'catpix'

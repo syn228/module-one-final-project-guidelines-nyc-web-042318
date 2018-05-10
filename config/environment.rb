@@ -4,6 +4,10 @@ require 'json'
 require 'pry'
 require 'rainbow'
 require 'highline/import'
+require 'tco'
+require 'catpix'
+require 'rmagick'
+
 
 Bundler.require
 
