@@ -34,19 +34,19 @@ class Method
   end
 
   def self.create_account
-    puts "Please enter your name:"
+    puts Rainbow("Please enter your name:").blue
     a_name = gets.chomp
-    puts "Please create your user name:"
+    puts Rainbow("Please create your user name:").blue
     un = gets.chomp.downcase
       while true
         if un.length < 4
-          puts "Your user name should be at least 4 characters."
+          puts Rainbow("Your user name should be at least 4 characters.").red
           un = gets.chomp.downcase
         elsif un.length > 15
-          puts "Your user name cannot exceed 15 characters"
+          puts Rainbow("Your user name cannot exceed 15 characters").red
           un = gets.chomp.downcase
         elsif User.find_by(username: un) != nil
-          puts "This user name already exists, please choose another user name."
+          puts Rainbow("This user name already exists, please choose another user name.").red
           un = gets.chomp.downcase
         else break
       end
