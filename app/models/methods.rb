@@ -69,33 +69,38 @@ class Method
 
 
   def self.site_selector(arr, type_input, new_city)
-    puts Rainbow("Which site would you like to visit?").magenta
-      site_selection = gets.chomp.to_i
+      if arr == []
+        puts "Sorry, there is no #{type_input} in that area."
+        # @current_user.get_city_and_type_name
+      else
+        puts Rainbow("Which site would you like to visit?").magenta
+          site_selection = gets.chomp.to_i
         until site_selection.class == Fixnum && site_selection != 0 && site_selection <= arr.length
           puts Rainbow("Please enter a valid number:").red
           site_selection = gets.chomp.to_i
         end
-      site = Site.find_or_create_by(name:arr[(site_selection - 1)], place_type: type_input, city_id: new_city.id)
-      Usersite.create(user_id: @current_user.id, site_id: site.id)
-      user_finder = Usersite.where(site_id: site.id).map {|usersite| usersite.user_id}
+        site = Site.find_or_create_by(name:arr[(site_selection - 1)], place_type: type_input, city_id: new_city.id)
+        Usersite.create(user_id: @current_user.id, site_id: site.id)
+        user_finder = Usersite.where(site_id: site.id).map {|usersite| usersite.user_id}
 
-      user_list = user_finder.map {|usi| User.where(id: usi)}.map {|user| user}.flatten.map {|user| user.name}.flatten.uniq.delete_if {|names| names == @current_user.name}
+        user_list = user_finder.map {|usi| User.where(id: usi)}.map {|user| user}.flatten.map {|user| user.name}.flatten.uniq.delete_if {|names| names == @current_user.name}
 
-      username_display = user_finder.map {|usi| User.where(id: usi)}.map {|user| user}.flatten.map {|user| user.username}.flatten.uniq.delete_if {|eye_d| eye_d == @current_user.id}
+        username_display = user_finder.map {|usi| User.where(id: usi)}.map {|user| user}.flatten.map {|user| user.username}.flatten.uniq.delete_if {|eye_d| eye_d == @current_user.id}
 
-        if user_list.length > 0
-          puts Rainbow("All users going to this area:").magenta
-            user_display = user_list.each_with_index{|list, i| puts "#{i + 1}. #{list}: #{username_display[i]}"}
-          puts Rainbow("Which user do you want to go with?").magenta
-            user_selection = gets.chomp.to_i
-          until user_selection.class == Fixnum && user_selection != 0 && user_selection <= user_list.length
-            puts Rainbow("Please enter a valid number:").red
+          if user_list.length > 0
+            puts Rainbow("All users going to this area:").magenta
+              user_display = user_list.each_with_index{|list, i| puts "#{i + 1}. #{list}: #{username_display[i]}"}
+            puts Rainbow("Which user do you want to go with?").magenta
               user_selection = gets.chomp.to_i
+            until user_selection.class == Fixnum && user_selection != 0 && user_selection <= user_list.length
+              puts Rainbow("Please enter a valid number:").red
+                user_selection = gets.chomp.to_i
+            end
+            puts Rainbow("Thank you! We have sent a request to that user!").magenta
+          else
+            puts Rainbow("Nobody is going to that site yet!").magenta
           end
-          puts Rainbow("Thank you! We have sent a request to that user!").magenta
-        else
-          puts Rainbow("Nobody is going to that site yet!").magenta
-        end
+      end
   end
 
   def self.site_helper_method(type_input, latitude, longitude, radius_input, new_city, additional_input="Yes".downcase)
@@ -122,9 +127,15 @@ class Method
 
 
   def self.add_more_sites(type_input, latitude, longitude, radius_input, new_city)
-    puts Rainbow("Do you want to add more sites? Yes/No").magenta
+    puts Rainbow("Do you want to add more sites? Yes/No
+If you want to see the list of site choices, type 'sites'").magenta
     response = gets.chomp
-
+    until response != "sites".downcase
+      self.site_choices(type_input, latitude, longitude, radius_input, new_city)
+      puts Rainbow("Do you want to add more sites? Yes/No
+If you want to see the list of site choices, type 'sites'").magenta
+      response = gets.chomp
+    end
       if response == "Yes".downcase
         puts Rainbow("Please pick another site you would like to visit:").magenta
         additional_type = gets.chomp
