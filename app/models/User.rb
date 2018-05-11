@@ -19,8 +19,15 @@ class User < ActiveRecord::Base
     latlng = coordinate_finder(city_input)
     latitude = latlng[0]
     longitude = latlng[1]
-    puts Rainbow("Where kind of place are you interested in visiting? (i.e. cafe, restaurant, etc.)").magenta
+    puts Rainbow("Where kind of place are you interested in visiting? (i.e. cafe, restaurant, etc.)
+If you would like to see the list of possible sites to choose from, please type 'sites.'").magenta
     type_input = STDIN.gets.chomp.downcase
-    Method.site_helper_method(type_input, latitude, longitude, radius_input, new_city)
+    until type_input != "sites"
+      Method.site_choices(type_input, latitude, longitude, radius_input, new_city)
+      puts Rainbow("Where kind of place are you interested in visiting? (i.e. cafe, restaurant, etc.)
+    If you would like to see the list of possible sites to choose from, please type 'sites.'").magenta
+      type_input = STDIN.gets.chomp.downcase
+    end
+      Method.site_helper_method(type_input, latitude, longitude, radius_input, new_city)
   end
 end

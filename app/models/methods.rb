@@ -22,9 +22,9 @@ class Method
   end
 
   def self.sign_in_password(user)
-    pw = ask("Please enter your password:  ") { |q| q.echo = "*" }
+    pw = ask(Rainbow("Please enter your password:  ").blue) { |q| q.echo = "*" }
       if user.password != pw
-        puts "Wrong password. Please try again."
+        puts Rainbow("Wrong password. Please try again.").red
         self.sign_in_password(user)
       else
         puts Rainbow("Welcome #{user.name}!").cyan
@@ -135,4 +135,51 @@ class Method
         self.add_more_sites(type_input, latitude, longitude, radius_input, new_city)
     end
   end
+
+  def self.site_choices(type_input, latitude, longitude, radius_input, new_city)
+    puts "
+    amusement_park
+    aquarium
+    art_gallery
+    bakery
+    bar
+    beauty_salon
+    bicycle_store
+    book_store
+    bowling_alley
+    cafe
+    campground
+    casino
+    cemetery
+    church
+    city_hall
+    clothing_store
+    convenience_store
+    department_store
+    electronics_store
+    gym
+    jewelry_store
+    library
+    lodging
+    movie_theater
+    museum
+    night_club
+    park
+    restaurant
+    school
+    shoe_store
+    shopping_mall
+    spa
+    stadium
+    supermarket
+    taxi_stand
+    train_station
+    transit_station
+    zoo"
+  end
+
+
+
+
+
 end
