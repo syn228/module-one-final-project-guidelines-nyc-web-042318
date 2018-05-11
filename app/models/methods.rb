@@ -8,7 +8,7 @@ class Method
   def self.sign_in_username
     puts Rainbow("Please enter your username:
     1. Create Account").blue
-    un = STDIN.gets.chomp.downcase
+    un = gets.chomp.downcase
       if un == "1"
         self.create_account
       else user = User.find_by username: un
@@ -35,19 +35,19 @@ class Method
 
   def self.create_account
     puts "Please enter your name:"
-    a_name = STDIN.gets.chomp
+    a_name = gets.chomp
     puts "Please create your user name:"
-    un = STDIN.gets.chomp.downcase
+    un = gets.chomp.downcase
       while true
         if un.length < 4
           puts "Your user name should be at least 4 characters."
-          un = STDIN.gets.chomp.downcase
+          un = gets.chomp.downcase
         elsif un.length > 15
           puts "Your user name cannot exceed 15 characters"
-          un = STDIN.gets.chomp.downcase
+          un = gets.chomp.downcase
         elsif User.find_by(username: un) != nil
           puts "This user name already exists, please choose another user name."
-          un = STDIN.gets.chomp.downcase
+          un = gets.chomp.downcase
         else break
       end
     end
@@ -70,10 +70,10 @@ class Method
 
   def self.site_selector(arr, type_input, new_city)
     puts Rainbow("Which site would you like to visit?").magenta
-      site_selection = STDIN.gets.chomp.to_i
+      site_selection = gets.chomp.to_i
         until site_selection.class == Fixnum && site_selection != 0 && site_selection <= arr.length
           puts Rainbow("Please enter a valid number:").red
-          site_selection = STDIN.gets.chomp.to_i
+          site_selection = gets.chomp.to_i
         end
       site = Site.find_or_create_by(name:arr[(site_selection - 1)], place_type: type_input, city_id: new_city.id)
       Usersite.create(user_id: @current_user.id, site_id: site.id)
@@ -87,10 +87,10 @@ class Method
           puts Rainbow("All users going to this area:").magenta
             user_display = user_list.each_with_index{|list, i| puts "#{i + 1}. #{list}: #{username_display[i]}"}
           puts Rainbow("Which user do you want to go with?").magenta
-            user_selection = STDIN.gets.chomp.to_i
+            user_selection = gets.chomp.to_i
           until user_selection.class == Fixnum && user_selection != 0 && user_selection <= user_list.length
             puts Rainbow("Please enter a valid number:").red
-              user_selection = STDIN.gets.chomp.to_i
+              user_selection = gets.chomp.to_i
           end
           puts Rainbow("Thank you! We have sent a request to that user!").magenta
         else
@@ -110,7 +110,7 @@ class Method
 
   def self.more_of_the_same_site(type_input, latitude, longitude, radius_input, new_city)
     puts Rainbow("Are you interested in any other #{type_input}? (Yes/No)").magenta
-    additional_input = STDIN.gets.chomp
+    additional_input = gets.chomp
       if additional_input == "Yes".downcase
         self.site_helper_method(type_input, latitude, longitude, radius_input, new_city, additional_input)
       elsif additional_input == "No".downcase
@@ -123,11 +123,11 @@ class Method
 
   def self.add_more_sites(type_input, latitude, longitude, radius_input, new_city)
     puts Rainbow("Do you want to add more sites? Yes/No").magenta
-    response = STDIN.gets.chomp
+    response = gets.chomp
 
       if response == "Yes".downcase
         puts Rainbow("Please pick another site you would like to visit:").magenta
-        additional_type = STDIN.gets.chomp
+        additional_type = gets.chomp
         self.site_helper_method(additional_type, latitude, longitude, radius_input, new_city, additional_input="Yes".downcase)
       elsif response == "No".downcase
           puts Rainbow("Thank you!").magenta
