@@ -7,7 +7,7 @@ class Method
 
   def self.sign_in_username
     puts Rainbow("Please enter your username:
-    1. Create Account").blue
+    1. Create Account").green
     un = gets.chomp.downcase
       if un == "1"
         self.create_account
@@ -22,7 +22,7 @@ class Method
   end
 
   def self.sign_in_password(user)
-    pw = ask(Rainbow("Please enter your password:  ").blue) { |q| q.echo = "*" }
+    pw = ask(Rainbow("Please enter your password:  ").green) { |q| q.echo = "*" }
       if user.password != pw
         puts Rainbow("Wrong password. Please try again.").red
         self.sign_in_password(user)
@@ -34,9 +34,9 @@ class Method
   end
 
   def self.create_account
-    puts Rainbow("Please enter your name:").blue
+    puts Rainbow("Please enter your name:").green
     a_name = gets.chomp
-    puts Rainbow("Please create your user name:").blue
+    puts Rainbow("Please create your user name:").green
     un = gets.chomp.downcase
       while true
         if un.length < 4
@@ -51,12 +51,12 @@ class Method
         else break
       end
     end
-    pw = ask(Rainbow("Please create your password:  ").blue) { |q| q.echo = "*" }
+    pw = ask(Rainbow("Please create your password:  ").green) { |q| q.echo = "*" }
       while true
       if pw.length < 8
-        pw = ask(Rainbow("Your password should be at least 8 characters:  ").blue) { |q| q.echo = "*" }
+        pw = ask(Rainbow("Your password should be at least 8 characters:  ").green) { |q| q.echo = "*" }
       elsif pw.length >= 16
-        pw = ask(Rainbow("Your password cannot exceed 15 characters:  ").blue) { |q| q.echo = "*" }
+        pw = ask(Rainbow("Your password cannot exceed 15 characters:  ").green) { |q| q.echo = "*" }
       else break
       end
     end

@@ -12,7 +12,7 @@ require_relative '../config/environment'
 
   puts Rainbow("Hello, please sign in or create account to begin:
   1. Sign in
-  2. Create Account").blue
+  2. Create Account").green
 
   input = STDIN.gets.chomp.to_i
     until input.class == Fixnum && (input == 1 || input == 2)
